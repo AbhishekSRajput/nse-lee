@@ -13,7 +13,7 @@ MTO_URL_TEMPLATE = (
 def _parse_mto_data(text):
     result = {}
     for line in text.strip().splitlines():
-        parts = line.split("|")
+        parts = line.split(",")
         if len(parts) < 7:
             continue
         if parts[0].strip() != "20":

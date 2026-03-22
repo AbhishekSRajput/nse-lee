@@ -1,4 +1,5 @@
 import logging
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import quote
 
@@ -38,6 +39,7 @@ def _compute_max_pain(strikes_data):
 
 
 def get_option_summary(session, symbol):
+    time.sleep(0.3)
     url = OPTION_CHAIN_URL.format(symbol=quote(symbol.upper()))
 
     try:
@@ -96,7 +98,7 @@ def get_option_summary(session, symbol):
 def get_batch_pcr(session, symbols):
     result = {}
 
-    with ThreadPoolExecutor(max_workers=3) as executor:
+    with ThreadPoolExecutor(max_workers=2) as executor:
         futures = {
             executor.submit(get_option_summary, session, sym): sym
             for sym in symbols

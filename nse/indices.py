@@ -1,4 +1,5 @@
 import logging
+import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import quote
 
@@ -41,6 +42,7 @@ def _vix_regime(vix_value):
 
 
 def _fetch_single_index(session, index_name):
+    time.sleep(0.3)
     url = INDEX_URL_TEMPLATE.format(index=quote(index_name))
     try:
         resp = session.get(url, is_api=True)
@@ -84,7 +86,7 @@ def _fetch_single_index(session, index_name):
 def get_sector_performance(session):
     result = {}
 
-    with ThreadPoolExecutor(max_workers=4) as executor:
+    with ThreadPoolExecutor(max_workers=2) as executor:
         futures = {
             executor.submit(_fetch_single_index, session, idx): idx
             for idx in SECTOR_INDICES

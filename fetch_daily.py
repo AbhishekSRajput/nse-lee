@@ -104,10 +104,10 @@ def main():
 
     try:
         session = NSESession()
-        print("✓ NSE session established")
+        print("[OK] NSE session established")
     except Exception as exc:
         logger.error("Failed to establish NSE session: %s", exc)
-        print(f"✗ Session failed: {exc}")
+        print(f"[FAIL] Session failed: {exc}")
         sys.exit(1)
 
     # --- Delivery data ---
@@ -115,10 +115,10 @@ def main():
         try:
             delivery = get_delivery_data(session, for_date=for_date)
             result["delivery"] = delivery
-            print(f"✓ Delivery: {len(delivery)} stocks")
+            print(f"[OK] Delivery: {len(delivery)} stocks")
         except Exception as exc:
             logger.error("Delivery fetch failed: %s", exc)
-            print(f"✗ Delivery failed: {exc}")
+            print(f"[FAIL] Delivery failed: {exc}")
             result["delivery"] = {}
 
     # --- FII/DII ---
@@ -128,16 +128,16 @@ def main():
             result["fii_dii"] = fii_dii
             if fii_dii:
                 print(
-                    f"✓ FII/DII: FII {fii_dii['fii_signal']} "
+                    f"[OK] FII/DII: FII {fii_dii['fii_signal']} "
                     f"({fii_dii['fii_net_cr']:+.0f} Cr), "
                     f"DII {fii_dii['dii_signal']} "
                     f"({fii_dii['dii_net_cr']:+.0f} Cr)"
                 )
             else:
-                print("⚠ FII/DII: no data returned")
+                print("[WARN] FII/DII: no data returned")
         except Exception as exc:
             logger.error("FII/DII fetch failed: %s", exc)
-            print(f"✗ FII/DII failed: {exc}")
+            print(f"[FAIL] FII/DII failed: {exc}")
             result["fii_dii"] = None
 
     # --- F&O Ban ---
@@ -145,10 +145,10 @@ def main():
         try:
             fo_ban = get_fo_ban_list(session)
             result["fo_ban"] = fo_ban
-            print(f"✓ F&O Ban: {len(fo_ban)} stocks")
+            print(f"[OK] F&O Ban: {len(fo_ban)} stocks")
         except Exception as exc:
             logger.error("F&O ban fetch failed: %s", exc)
-            print(f"✗ F&O Ban failed: {exc}")
+            print(f"[FAIL] F&O Ban failed: {exc}")
             result["fo_ban"] = []
 
     # --- Sector Indices ---
@@ -156,10 +156,10 @@ def main():
         try:
             sectors = get_sector_performance(session)
             result["sector_indices"] = sectors
-            print(f"✓ Sector indices: {len(sectors)} indices")
+            print(f"[OK] Sector indices: {len(sectors)} indices")
         except Exception as exc:
             logger.error("Sector indices fetch failed: %s", exc)
-            print(f"✗ Sector indices failed: {exc}")
+            print(f"[FAIL] Sector indices failed: {exc}")
             result["sector_indices"] = {}
 
     # --- Corporate Actions ---
@@ -172,12 +172,12 @@ def main():
             result["earnings_blackout"] = earnings_blackout
 
             print(
-                f"✓ Corporate actions: {len(actions)} events, "
+                f"[OK] Corporate actions: {len(actions)} events, "
                 f"{len(earnings_blackout)} earnings blackout"
             )
         except Exception as exc:
             logger.error("Corporate actions fetch failed: %s", exc)
-            print(f"✗ Corporate actions failed: {exc}")
+            print(f"[FAIL] Corporate actions failed: {exc}")
             result["corporate_actions"] = []
             result["earnings_blackout"] = []
 
@@ -186,10 +186,10 @@ def main():
         try:
             option_chains = get_batch_pcr(session, pcr_tickers)
             result["option_chains"] = option_chains
-            print(f"✓ Option chains: {len(option_chains)} stocks")
+            print(f"[OK] Option chains: {len(option_chains)} stocks")
         except Exception as exc:
             logger.error("Option chain fetch failed: %s", exc)
-            print(f"✗ Option chains failed: {exc}")
+            print(f"[FAIL] Option chains failed: {exc}")
             result["option_chains"] = {}
 
     # --- Save output ---
