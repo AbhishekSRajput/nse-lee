@@ -1,11 +1,11 @@
-# nse-data
+# nse-lee
 
 Python library that fetches live market data from NSE (National Stock Exchange of India) official endpoints. Part of the NSE swing trading system — runs standalone and saves JSON output that a Next.js dashboard reads.
 
 ## Setup
 
 ```bash
-cd nse-data
+cd nse-lee
 pip install -r requirements.txt
 ```
 
